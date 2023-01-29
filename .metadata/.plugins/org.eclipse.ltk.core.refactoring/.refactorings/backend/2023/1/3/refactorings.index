@@ -1,0 +1,35 @@
+1674115572047	Rename package 'com.nadhem.produits'
+1674116220474	Rename type 'Produit'
+1674116405002	Rename package 'com.nadhem.produits'
+1674116432650	Rename type 'ProduitsApplicationTests'
+1674116457251	Rename type 'ProduitsApplication'
+1674116761422	Rename type 'ProduitRepository'
+1674116805692	Rename type 'ProduitService'
+1674116832038	Rename type 'ProduitServiceImpl'
+1674118362334	Rename type 'ReclamationRepository'
+1674119934976	Copy compilation unit
+1674119945214	Delete element
+1674119959989	Delete element
+1674119990218	Rename type 'ReclamationsRepository'
+1674294145260	Rename package 'com.backend'
+1674294218602	Rename package 'com.reclamations.entities'
+1674294447523	Rename type 'user'
+1674295315568	Delete element
+1674295332563	Copy compilation units
+1674295463378	Copy compilation units
+1674295611526	Rename package 'com.backends.entities'
+1674296118904	Delete elements
+1674296133053	Copy compilation units
+1674296141598	Delete elements
+1674296166570	Copy compilation unit
+1674296178860	Delete element
+1674296430351	Delete element
+1674296454784	Copy compilation units
+1674296483219	Copy compilation units
+1674297653184	Delete element
+1674297727635	Rename type 'ReclamationsApplication'
+1674298154447	Rename type 'InfractionRestService'
+1674298173339	Rename type 'ReclamationRestService'
+1674382669363	Delete elements
+1674382690901	Move compilation unit
+1674382700942	Move compilation unit

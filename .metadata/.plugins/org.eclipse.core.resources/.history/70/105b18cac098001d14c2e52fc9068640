@@ -1,0 +1,9 @@
+package com.reclamations.repos;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.reclamations.entities.Infraction;
+
+public interface InfractionRepository extends JpaRepository<Infraction, Long> {
+
+}

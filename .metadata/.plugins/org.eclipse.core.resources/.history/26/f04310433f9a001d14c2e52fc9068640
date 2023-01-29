@@ -1,0 +1,5 @@
+package com.backends.security.entity;
+
+public class Role {
+
+}

@@ -1,0 +1,11 @@
+package com.reclamations.service;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.reclamations.entities.Reclamation;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+
+@RepositoryRestResource
+public interface ReclamationRepository extends JpaRepository<Reclamation, Long> {
+
+}

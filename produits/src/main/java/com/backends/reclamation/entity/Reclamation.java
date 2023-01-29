@@ -1,0 +1,168 @@
+package com.backends.reclamation.entity;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.springframework.data.geo.Point;
+
+@Entity
+public class Reclamation {	
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long idReclamation;
+	private int numReclamation;
+	private LocalDate dateReclamation;
+	private String prenom_nomSourceReclamation;
+	private String adresseSourceReclamation;
+	private String prenom_nomSourceDestinataire;
+	private String adresseSourceDestinataire;
+	private String adresseLocal;
+	private String objetifReclamation;
+	private String observation;
+	private LocalDate dateCreation;
+	private LocalDate dateDernierModification;
+	private boolean etat;
+	
+	
+	 /*@OneToOne
+	 @JoinColumn(name = "idReclamation")
+	 private Infraction infraction;*/
+
+	public Reclamation() {
+		super();
+	}
+
+	public Reclamation(Long idReclamation, int numReclamation, LocalDate dateReclamation,
+			String prenom_nomSourceReclamation, String adresseSourceReclamation, String prenom_nomSourceDestinataire,
+			String adresseSourceDestinataire, String adresseLocal, String objetifReclamation, String observation,
+			LocalDate dateCreation, LocalDate dateDernierModification) {
+		super();
+		this.idReclamation = idReclamation;
+		this.numReclamation = numReclamation;
+		this.dateReclamation = dateReclamation;
+		this.prenom_nomSourceReclamation = prenom_nomSourceReclamation;
+		this.adresseSourceReclamation = adresseSourceReclamation;
+		this.prenom_nomSourceDestinataire = prenom_nomSourceDestinataire;
+		this.adresseSourceDestinataire = adresseSourceDestinataire;
+		this.adresseLocal = adresseLocal;
+		this.objetifReclamation = objetifReclamation;
+		this.observation = observation;
+		this.dateCreation = dateCreation;
+		this.dateDernierModification = dateDernierModification;
+	}
+
+	public Long getIdReclamation() {
+		return idReclamation;
+	}
+
+	public void setIdReclamation(Long idReclamation) {
+		this.idReclamation = idReclamation;
+	}
+
+	public int getNumReclamation() {
+		return numReclamation;
+	}
+
+	public void setNumReclamation(int numReclamation) {
+		this.numReclamation = numReclamation;
+	}
+
+	public LocalDate getDateReclamation() {
+		return dateReclamation;
+	}
+
+	public void setDateReclamation(LocalDate dateReclamation) {
+		this.dateReclamation = dateReclamation;
+	}
+
+	public String getPrenom_nomSourceReclamation() {
+		return prenom_nomSourceReclamation;
+	}
+
+	public void setPrenom_nomSourceReclamation(String prenom_nomSourceReclamation) {
+		this.prenom_nomSourceReclamation = prenom_nomSourceReclamation;
+	}
+
+	public String getAdresseSourceReclamation() {
+		return adresseSourceReclamation;
+	}
+
+	public void setAdresseSourceReclamation(String adresseSourceReclamation) {
+		this.adresseSourceReclamation = adresseSourceReclamation;
+	}
+
+	public String getPrenom_nomSourceDestinataire() {
+		return prenom_nomSourceDestinataire;
+	}
+
+	public void setPrenom_nomSourceDestinataire(String prenom_nomSourceDestinataire) {
+		this.prenom_nomSourceDestinataire = prenom_nomSourceDestinataire;
+	}
+
+	public String getAdresseSourceDestinataire() {
+		return adresseSourceDestinataire;
+	}
+
+	public void setAdresseSourceDestinataire(String adresseSourceDestinataire) {
+		this.adresseSourceDestinataire = adresseSourceDestinataire;
+	}
+
+	public String getAdresseLocal() {
+		return adresseLocal;
+	}
+
+	public void setAdresseLocal(String adresseLocal) {
+		this.adresseLocal = adresseLocal;
+	}
+
+	public String getObjetifReclamation() {
+		return objetifReclamation;
+	}
+
+	public void setObjetifReclamation(String objetifReclamation) {
+		this.objetifReclamation = objetifReclamation;
+	}
+
+	public String getObservation() {
+		return observation;
+	}
+
+	public void setObservation(String observation) {
+		this.observation = observation;
+	}
+
+	public LocalDate getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(LocalDate dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public LocalDate getDateDernierModification() {
+		return dateDernierModification;
+	}
+
+	public void setDateDernierModification(LocalDate dateDernierModification) {
+		this.dateDernierModification = dateDernierModification;
+	}
+
+	@Override
+	public String toString() {
+		return "Reclamation [idReclamation=" + idReclamation + ", numReclamation=" + numReclamation
+				+ ", dateReclamation=" + dateReclamation + ", prenom_nomSourceReclamation="
+				+ prenom_nomSourceReclamation + ", adresseSourceReclamation=" + adresseSourceReclamation
+				+ ", prenom_nomSourceDestinataire=" + prenom_nomSourceDestinataire + ", adresseSourceDestinataire="
+				+ adresseSourceDestinataire + ", adresseLocal=" + adresseLocal + ", objetifReclamation="
+				+ objetifReclamation + ", observation=" + observation + ", dateCreation=" + dateCreation
+				+ ", dateDernierModification=" + dateDernierModification + "]";
+	}
+	
+}

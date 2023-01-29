@@ -1,0 +1,63 @@
+package com.backends.reclamation.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.backends.reclamation.entity.Reclamation;
+import com.backends.reclamation.repository.ReclamationRepository;
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@PreAuthorize("hasRole('RECLAMATION') or hasRole('ADMIN')")
+@RequestMapping("/api")
+public class ReclamationWeb {
+	@Autowired
+	private ReclamationRepository reclamationRepository;
+	
+	@GetMapping(value="/listreclamation")	
+	public List<Reclamation> listReclamations(){
+		return reclamationRepository.findAll();
+	}
+	
+	@GetMapping("/listreclamation/{idReclamation}")
+	public Reclamation listReclamations(@PathVariable(name="idReclamation") Long idReclamation){
+		return reclamationRepository.findById(idReclamation).get();
+	}
+	
+	/*@GetMapping("/listreclamations/5/{idReclamation}")
+	
+    public ResponseEntity<List<Reclamation>> listCateg(@PathVariable String idReclamation) {
+        
+		List<Scategorie> scategories = repository.findByCateg(id_categ);
+       
+        return new ResponseEntity<List<Scategorie>>(scategories, HttpStatus.OK);
+    }*/
+	
+	@PostMapping(value="/listreclamation")
+	public Reclamation createReclamation( @RequestBody Reclamation reclamation){
+		return reclamationRepository.save(reclamation);
+	}
+	
+	@PutMapping(value="/listreclamation/{idReclamation}")
+	public Reclamation updateReclamation(@PathVariable(name="idReclamation") Long idReclamation, @RequestBody Reclamation reclamation){
+		reclamation.setIdReclamation(idReclamation);
+		return reclamationRepository.save(reclamation);
+	}
+	
+	@DeleteMapping(value="/listreclamation/{idReclamation}")
+	public void deleteReclamation(@PathVariable(name="idReclamation") Long idReclamation){
+		 reclamationRepository.deleteById(idReclamation);
+	}
+
+}

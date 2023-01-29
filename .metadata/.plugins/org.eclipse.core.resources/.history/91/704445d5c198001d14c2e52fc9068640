@@ -1,0 +1,31 @@
+package com.reclamations.entities;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.springframework.data.geo.Point;
+
+@Entity
+public class Infraction {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long idInfraction;
+	private int numInfraction;
+	private LocalDate dateInfraction;
+	private LocalDate heureInfraction;
+	private int cinSourceInfraction;
+	private String descriptionInfraction;
+	private String niveauTraveaux;
+	private String degats;
+	private String descriptions;
+	
+	/*@OneToOne(mappedBy = "reclamation")
+	 private Reclamation reclamation;*/
+	
+}

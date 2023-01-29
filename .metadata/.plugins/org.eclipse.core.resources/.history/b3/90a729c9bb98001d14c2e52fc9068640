@@ -1,0 +1,5 @@
+package com.reclamations.entities;
+
+public class Infraction {
+
+}

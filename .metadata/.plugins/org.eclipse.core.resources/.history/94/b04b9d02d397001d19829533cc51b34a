@@ -1,0 +1,15 @@
+package com.reclamations.service;
+
+import java.util.List;
+
+import com.reclamations.entities.Reclamation;
+
+public interface ProduitService {
+	Reclamation saveProduit(Reclamation p);
+	Reclamation updateProduit(Reclamation p);
+	void deleteProduit(Reclamation p);
+	void deleteProduitById(Long id);
+	Reclamation getProduit(Long id);
+	List<Reclamation> getAllProduits();
+
+}

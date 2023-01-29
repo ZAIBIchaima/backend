@@ -1,0 +1,5 @@
+package com.reclamations.service;
+
+public class ReclamationRestService {
+
+}

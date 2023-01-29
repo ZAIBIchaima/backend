@@ -1,0 +1,101 @@
+package com.backends.stock.web;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.servlet.ServletContext;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParseException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.backends.exception.ResourceNotFoundException;
+import com.backends.stock.entity.Inventaire;
+import com.backends.stock.entity.Linventaire;
+import com.backends.stock.repository.InventaireRepository;
+import com.backends.stock.repository.LinventaireRepository;
+
+
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+@RequestMapping("/api")
+@PreAuthorize("hasRole('ADMIN') or hasRole('STOCK') ")
+public class InventaireController {
+	@Autowired InventaireRepository repository;
+	@Autowired LinventaireRepository repo;
+	@Autowired  ServletContext context;
+	 @GetMapping("/invents")
+	  public List<Inventaire> getAllInvents() {
+	    System.out.println("Get all Invents...");
+	    List<Inventaire> Invents = new ArrayList<>();
+	    repository.findAll().forEach(Invents::add);
+	    return Invents;
+	  }
+	 @GetMapping("/invents/{id}")
+		public ResponseEntity<Inventaire> getInventById(@PathVariable(value = "id") Long InventId)
+				throws ResourceNotFoundException {
+		 Inventaire Inventaire = repository.findById(InventId)
+					.orElseThrow(() -> new ResourceNotFoundException("Invent not found for this id :: " + InventId));
+			return ResponseEntity.ok().body(Inventaire);
+		}
+		@PostMapping("/invents")
+		public ResponseEntity<Inventaire> createInvent( @RequestBody Inventaire Inventaire)  throws JsonParseException , JsonMappingException , Exception{
+			repository.save(Inventaire);
+			List<Linventaire> linvents = Inventaire.getLinvents();
+		    for (Linventaire lc : linvents) {
+		        lc.setNumInventaire(Inventaire.getNumInventaire());
+	       		repo.save(lc);
+		       }	 
+		
+			 return new ResponseEntity<>(HttpStatus.OK);
+		}
+			
+		@DeleteMapping("/invents/{id}")
+		public Map<String, Boolean> deleteInvent(@PathVariable(value = "id") Long InventId)
+				throws ResourceNotFoundException {
+			Inventaire Inventaire = repository.findById(InventId)
+					.orElseThrow(() -> new ResourceNotFoundException("Invent not found  id :: " + InventId));
+			repository.delete(Inventaire);
+			Map<String, Boolean> response = new HashMap<>();
+			response.put("deleted", Boolean.TRUE);
+			return response;
+		}
+		  @DeleteMapping("/invents/delete")
+		  public ResponseEntity<String> deleteAllInvents() {
+		    System.out.println("Delete All Invents...");
+		    repository.deleteAll();
+		    return new ResponseEntity<>("All Invents have been deleted!", HttpStatus.OK);
+		  }
+		 
+		  @PutMapping("/invents/{id}")
+		  public ResponseEntity<Inventaire> updateInvent(@PathVariable("id") long id, @RequestBody Inventaire Invent) {
+		    System.out.println("Update Invent with ID = " + id + "...");
+		    Optional<Inventaire> InventInfo = repository.findById(id);
+		    if (InventInfo.isPresent()) {
+		    	Inventaire invent = InventInfo.get();
+		    	invent.setId(Invent.getId());
+		    	invent.setDateInventaire(Invent.getDateInventaire());
+		    	invent.setNumInventaire(Invent.getNumInventaire());
+		    	
+		      return new ResponseEntity<>(repository.save(Invent), HttpStatus.OK);
+		    } else {
+		      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		    }
+		  }
+}

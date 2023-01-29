@@ -1,0 +1,50 @@
+package com.reclamations.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.reclamations.entities.Reclamation;
+import com.reclamations.repos.ReclamationRepository;
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+public class ReclamationRestService {
+	@Autowired
+	private ReclamationRepository reclamationRepository;
+	
+	@GetMapping(value="/listreclamations")
+	public List<Reclamation> listReclamations(){
+		return reclamationRepository.findAll();
+	}
+	
+	@GetMapping("/listreclamations/{idReclamation}")
+	public Reclamation listReclamations(@PathVariable(name="idReclamation") Long idReclamation){
+		return reclamationRepository.findById(idReclamation).get();
+	}
+	
+	@PostMapping("/listreclamations")
+	public Reclamation createReclamation( @RequestBody Reclamation reclamation){
+		return reclamationRepository.save(reclamation);
+	}
+	
+	@PutMapping("/listreclamations/{idReclamation}")
+	public Reclamation updateReclamation(@PathVariable(name="idReclamation") Long idReclamation, @RequestBody Reclamation reclamation){
+		reclamation.setIdReclamation(idReclamation);
+		return reclamationRepository.save(reclamation);
+	}
+	
+	@DeleteMapping("/listreclamations/{idReclamation}")
+	public void deleteReclamation(@PathVariable(name="idReclamation") Long idReclamation){
+		 reclamationRepository.deleteById(idReclamation);
+	}
+
+}

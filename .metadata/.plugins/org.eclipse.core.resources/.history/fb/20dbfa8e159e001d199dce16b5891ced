@@ -1,0 +1,94 @@
+package com.pj.iset.web;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import java.util.Optional;
+
+import com.pj.iset.exception.ResourceNotFoundException;
+import com.pj.iset.model.Article;
+import com.pj.iset.repository.ArticleRepository;
+
+@ CrossOrigin ( origins = "http://localhost:4200" )
+@ RestController
+@ RequestMapping ( "/api" )
+public class ArticleController {
+	@Autowired 	ArticleRepository  repository;
+	
+	 @GetMapping("/articles")
+	  public List<Article> getAllArticles() {
+	     System.out.println("Get all articles...");
+	 
+	    List<Article> articles = new ArrayList<>();
+	    repository.findAll().forEach(articles::add);
+	 
+	    return articles;
+	  }
+	 
+	 @GetMapping("/articles/{id}")
+		public ResponseEntity<Article> getArticleById(@PathVariable(value = "id") Long Id)
+				throws ResourceNotFoundException {
+			Article Article = repository.findById(Id).orElseThrow(() -> new ResourceNotFoundException("Article not found for this id :: " + Id));
+			return ResponseEntity.ok().body(Article);
+		}
+	 
+	
+	 @PostMapping("/articles")
+	 public Article createArticle( @RequestBody Article article) {
+		 return repository.save(article);
+	 }
+	 
+
+	 @DeleteMapping("/articles/{id}")
+		public Map<String,Boolean>deleteArticle(@PathVariable(value="id")Long ArticleId)
+				throws ResourceNotFoundException {
+			Article Article = repository.findById(ArticleId).orElseThrow(() -> new ResourceNotFoundException("Article not found for this id :: " + ArticleId));
+			repository.delete(Article);
+			Map<String,Boolean>response=new HashMap<>();
+			response.put("deleted", Boolean.TRUE);
+			return response;
+		
+	}
+	 @DeleteMapping("/Articles/delete")
+		public ResponseEntity<String>deleteAllArticles(){
+			System.out.println("Delete All Articles");
+			repository.deleteAll();
+			return new ResponseEntity<>("All articles have been deleted!",HttpStatus.OK);
+		}
+
+	  @PutMapping("/articles/{id}")
+	  public ResponseEntity<Article> updateArticle(@PathVariable("id") long id, @RequestBody Article Article) {
+	    System.out.println("Update Article with ID = " + id + "...");
+	    Optional<Article> ArticleInfo = repository.findById(id);
+	    if (ArticleInfo.isPresent()) {
+	    	Article article = ArticleInfo.get();
+	    	article.setLibelle(Article.getLibelle());
+	           article.setQteStock(Article.getQteStock())   ; 
+	           article.setQteCri(Article.getQteCri());
+	           article.setDateCreation(Article.getDateCreation());
+	           article.setQteMin(Article.getQteMin());
+	           article.setQteStock(Article.getQteStock());
+	           article.setReference(Article.getReference());
+	           article.setIdCat(Article.getIdCat());
+	           article.setIdScat(Article.getIdScat());
+	      return new ResponseEntity<>(repository.save(Article), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+
+}

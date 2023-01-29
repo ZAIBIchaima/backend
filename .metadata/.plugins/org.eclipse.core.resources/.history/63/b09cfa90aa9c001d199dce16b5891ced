@@ -1,0 +1,51 @@
+package com.backends.reclamation.web;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.backends.reclamation.entity.Infraction;
+import com.backends.reclamation.repository.InfractionRepository;
+
+
+@CrossOrigin(origins = "http://localhost:4200")
+@RestController
+public class InfractionWeb {
+	
+	@Autowired
+	private InfractionRepository infractionRepository;
+	
+	@GetMapping(value="/listinfraction")
+	public List<Infraction> listInfractions(){
+		return infractionRepository.findAll();
+	}
+	
+	@GetMapping(value="/listinfraction/{idInfraction}")
+	public Infraction listinfractions(@PathVariable(name="idInfraction") Long idInfraction){
+		return infractionRepository.findById(idInfraction).get();
+	}
+	
+	@PostMapping(value="/listinfraction")
+	public Infraction createInfraction( @RequestBody Infraction infraction){
+		return infractionRepository.save(infraction);
+	}
+	
+	@PutMapping(value="/listinfraction/{idInfraction}")
+	public Infraction updateInfraction(@PathVariable(name="idInfraction") Long idInfraction, @RequestBody Infraction infraction){
+		infraction.setIdInfraction(idInfraction);
+		return infractionRepository.save(infraction);
+	}
+	
+	@DeleteMapping(value="/listinfraction/{idInfraction}")
+	public void deleteInfraction(@PathVariable(name="idInfraction") Long idInfraction){
+		infractionRepository.deleteById(idInfraction);
+	}
+}

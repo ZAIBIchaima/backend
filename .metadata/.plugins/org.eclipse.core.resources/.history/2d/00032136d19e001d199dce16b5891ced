@@ -1,0 +1,35 @@
+package com.backends.reclamation.entity;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.backends.stock.entity.Categorie;
+
+import java.time.LocalDate;
+
+@Entity
+public class Arrete {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long idArrete;
+	private int numArrete;
+	private LocalDate dateArrete;
+	private String descriptionArrete;
+	private String objetArrete;
+	private LocalDate dateExecution;
+	
+	@ManyToOne (cascade=CascadeType.ALL)
+	@JoinColumn(name="id_Infraction")
+	private Infraction parentInfraction;
+	@Transient
+	private long idInfraction;
+	
+	
+
+}

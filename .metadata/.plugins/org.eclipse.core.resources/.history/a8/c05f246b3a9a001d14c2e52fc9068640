@@ -1,0 +1,110 @@
+package com.pj.iset.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import java.util.Optional;
+
+import com.pj.iset.exception.ResourceNotFoundException;
+import com.pj.iset.model.DetailsOperation;
+import com.pj.iset.repository.DetailsOperationRepository;
+
+
+@ CrossOrigin ( origins = "http://localhost:4200" )
+@ RestController
+@ RequestMapping ( "/api" )
+public class DetailsOperationController {
+	@Autowired 	DetailsOperationRepository  repository;
+	
+	 @GetMapping("/detailsoperations")
+	  public List<DetailsOperation> getAllDetailsOperations() {
+	    System.out.println("Get all DetailsOperations...");
+	 
+	    List<DetailsOperation> DetailsOperations = new ArrayList<>();
+	    repository.findAll().forEach(DetailsOperations::add);
+	 
+	    return DetailsOperations;
+	  }
+	 @GetMapping("/detailsOperations/{id}")
+	  public List<DetailsOperation> getAllById(@PathVariable(value = "id") long id) {
+	    System.out.println("Get all detailsOperations...");
+	 
+	    List<DetailsOperation> DetailsOperations = new ArrayList<>();
+	    repository.findAllById(id).forEach(DetailsOperations::add);
+	 
+	    return DetailsOperations;
+	  }
+	
+	@GetMapping("/detailsOperationss/{id}")
+	public ResponseEntity<DetailsOperation> getDetailsOperationById(@PathVariable(value = "id") Long DetailsOperationId)
+			throws ResourceNotFoundException {
+		DetailsOperation DetailsOperation = repository.findById(DetailsOperationId)
+				.orElseThrow(() -> new ResourceNotFoundException("detailsOperations not found for this id :: " + DetailsOperationId));
+		return ResponseEntity.ok().body(DetailsOperation);
+	}
+
+	@PostMapping("/detailsOperations")
+	public  DetailsOperation createDetailsOperation( @RequestBody DetailsOperation DetailsOperation) {
+		
+		return repository.save(DetailsOperation);
+		
+		 
+	}
+	
+
+	@DeleteMapping("/detailsOperations/{id}")
+	public Map<String, Boolean> deleteDetailsOperation(@PathVariable(value = "id") Long DetailsOperationID)
+			throws ResourceNotFoundException {
+		DetailsOperation DetailsOperation = repository.findById(DetailsOperationID)
+				.orElseThrow(() -> new ResourceNotFoundException("DetailsOperation not found  id :: " + DetailsOperationID));
+
+		repository.delete(DetailsOperation);
+		Map<String, Boolean> response = new HashMap<>();
+		response.put("deleted", Boolean.TRUE);
+		return response;
+	}
+	  
+	 
+	 
+	 
+	
+
+	  @PutMapping("/detailsOperations/{id}")
+	  public ResponseEntity<DetailsOperation> updateDetailsOperation(@PathVariable("id") long id, @RequestBody DetailsOperation DetailsOperation) {
+	    System.out.println("Update detailsOperation with ID = " + id + "...");
+	 
+	    Optional<DetailsOperation> DetailsOperationInfo = repository.findById(id);
+	 
+	    if (DetailsOperationInfo.isPresent()) {
+	    	DetailsOperation detailsOperation = DetailsOperationInfo.get();
+	    	detailsOperation.setId(DetailsOperation.getId());
+	    	detailsOperation.setQte(DetailsOperation.getQte());
+	    	detailsOperation.setReference(DetailsOperation.getReference());
+	    	detailsOperation.setLibelle(DetailsOperation.getLibelle());
+	          
+	         
+	          
+	      return new ResponseEntity<>(repository.save(DetailsOperation), HttpStatus.OK);
+	    } else {
+	      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	    }
+	  }
+
+	 
+	  
+}

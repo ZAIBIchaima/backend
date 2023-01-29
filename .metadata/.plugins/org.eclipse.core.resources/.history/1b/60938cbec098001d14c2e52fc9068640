@@ -1,0 +1,7 @@
+package com.reclamations.repos;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface InfractionRepository extends JpaRepository<T, ID> {
+
+}

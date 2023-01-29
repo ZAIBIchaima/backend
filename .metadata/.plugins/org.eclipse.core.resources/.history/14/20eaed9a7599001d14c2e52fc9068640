@@ -1,0 +1,23 @@
+package com.backends.stock.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+
+import com.backends.commun.Departement;
+
+import lombok.Data;
+
+@Data
+@Entity 
+@DiscriminatorValue("1")
+public class Sortie extends Operation implements Serializable {
+ /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+@ManyToOne
+	private Departement  departement;
+}

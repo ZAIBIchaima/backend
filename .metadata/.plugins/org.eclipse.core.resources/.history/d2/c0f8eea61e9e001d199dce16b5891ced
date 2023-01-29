@@ -1,0 +1,5 @@
+package com.backends.bo.web;
+
+public class RecusController {
+
+}

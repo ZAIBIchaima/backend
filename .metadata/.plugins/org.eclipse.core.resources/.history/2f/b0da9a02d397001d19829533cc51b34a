@@ -1,0 +1,50 @@
+package com.reclamations.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.reclamations.entities.Reclamation;
+import com.reclamations.repos.ReclamationRepository;
+
+public class ProduitServiceImpl implements ProduitService{
+
+	@Autowired
+	ReclamationRepository produitRepository;
+	
+	@Override
+	public Reclamation saveProduit(Reclamation p) {
+		return produitRepository.save(p);
+	}
+
+	@Override
+	public Reclamation updateProduit(Reclamation p) {
+		return produitRepository.save(p);
+	}
+
+	@Override
+	public void deleteProduit(Reclamation p) {
+		produitRepository.delete(p);
+		
+	}
+
+	@Override
+	public void deleteProduitById(Long id) {
+		produitRepository.deleteById(id);
+		
+	}
+
+	@Override
+	public Reclamation getProduit(Long id) {
+		return produitRepository.findById(id).get();
+	}
+
+	@Override
+	public List<Reclamation> getAllProduits() {
+		
+		return produitRepository.findAll();
+	}
+	
+	
+
+}

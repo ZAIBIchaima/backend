@@ -1,0 +1,9 @@
+package com.pj.iset.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.pj.iset.model.Linventaire;
+
+public interface LinventaireRepository  extends JpaRepository<Linventaire, Long> {
+
+}

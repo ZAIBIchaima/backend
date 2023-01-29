@@ -1,0 +1,95 @@
+package com.reclamations.entities;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+import org.springframework.data.geo.Point;
+
+@Entity
+public class Infraction {
+	@Id
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	private Long idInfraction;
+	private int numInfraction;
+	private LocalDateTime dateInfraction;
+	private LocalDate heureInfraction;
+	private int cinSourceInfraction;
+	private String prenom_nom;
+	private String descriptionInfraction;
+	private String niveauTraveaux;
+	private String degats;
+	private String descriptions;
+	public Long getIdInfraction() {
+		return idInfraction;
+	}
+	public void setIdInfraction(Long idInfraction) {
+		this.idInfraction = idInfraction;
+	}
+	public int getNumInfraction() {
+		return numInfraction;
+	}
+	public void setNumInfraction(int numInfraction) {
+		this.numInfraction = numInfraction;
+	}
+	public LocalDate getDateInfraction() {
+		return dateInfraction;
+	}
+	public void setDateInfraction(LocalDate dateInfraction) {
+		this.dateInfraction = dateInfraction;
+	}
+	public LocalDate getHeureInfraction() {
+		return heureInfraction;
+	}
+	public void setHeureInfraction(LocalDate heureInfraction) {
+		this.heureInfraction = heureInfraction;
+	}
+	public int getCinSourceInfraction() {
+		return cinSourceInfraction;
+	}
+	public void setCinSourceInfraction(int cinSourceInfraction) {
+		this.cinSourceInfraction = cinSourceInfraction;
+	}
+	public String getDescriptionInfraction() {
+		return descriptionInfraction;
+	}
+	public void setDescriptionInfraction(String descriptionInfraction) {
+		this.descriptionInfraction = descriptionInfraction;
+	}
+	public String getNiveauTraveaux() {
+		return niveauTraveaux;
+	}
+	public void setNiveauTraveaux(String niveauTraveaux) {
+		this.niveauTraveaux = niveauTraveaux;
+	}
+	public String getDegats() {
+		return degats;
+	}
+	public void setDegats(String degats) {
+		this.degats = degats;
+	}
+	public String getDescriptions() {
+		return descriptions;
+	}
+	public void setDescriptions(String descriptions) {
+		this.descriptions = descriptions;
+	}
+	@OneToOne
+	 @JoinColumn(name = "idReclamation")
+	private Reclamation reclamation;
+	@OneToOne
+	 @JoinColumn(name = "idEmployee")
+	private Employee employee;
+	
+	/*@OneToOne(mappedBy = "reclamation")
+	 private Reclamation reclamation;*/
+	
+	
+	
+}

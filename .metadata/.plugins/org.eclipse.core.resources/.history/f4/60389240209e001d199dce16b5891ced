@@ -1,0 +1,5 @@
+package com.backends.bo.repository;
+
+public interface CanalRepository {
+
+}

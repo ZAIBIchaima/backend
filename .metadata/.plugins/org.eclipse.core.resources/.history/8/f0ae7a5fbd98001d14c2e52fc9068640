@@ -1,0 +1,69 @@
+package com.reclamations;
+
+
+
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.geo.Point;
+
+import com.reclamations.entities.Reclamation;
+import com.reclamations.repos.ReclamationRepository;
+
+
+@SpringBootTest
+class ReclamationsApplicationTests {
+
+	@Autowired
+	private ReclamationRepository produitRepository;
+	
+	@Test
+	public void testCreateProduit() {
+	Reclamation prod = new Reclamation(null,1,LocalDate.now(),"source",
+			new Point(-6.815096, 55.167801),"destinataire", 
+			new Point(18.110189, 42.639752),new Point(14.446442, 35.896447),
+			"objectif","observation",LocalDate.now(),LocalDate.now());
+	produitRepository.save(prod);
+	}
+	
+	@Test
+	public void testFindProduit()
+	{
+	Reclamation p = produitRepository.findById(1L).get();
+	System.out.println(p);
+	}
+	
+	@Test
+	public void testUpdateProduit()
+	{
+	Reclamation p = produitRepository.findById(1L).get();
+	p.setNumReclamation(2);
+	produitRepository.save(p);
+	
+	System.out.println(p);
+	}
+	
+	@Test
+	public void testDeleteProduit()
+	{
+		produitRepository.deleteById(1L);
+	}
+	
+	@Test
+	public void testFindAllProduits()
+	{
+		List<Reclamation> prods = produitRepository.findAll();
+		
+		for (Reclamation p:prods)
+			 System.out.println(p);
+		
+	}
+	
+	
+	
+	
+}
